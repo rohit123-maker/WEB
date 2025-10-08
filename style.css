@@ -1,0 +1,171 @@
+/* CSS VARIABLES (Core of customization) */
+:root {
+    /* Theme Colors (Default: Neon Blue) */
+    --bg-color: #0b0c10;
+    --primary-color: #66fcf1;
+    --secondary-color: #c5c6c7;
+    --container-bg: rgba(31, 40, 49, 0.7);
+    --neon-glow: 0 0 10px rgba(102, 252, 241, 0.5);
+
+    /* Font & Style Variables */
+    --main-font: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --time-font-size: 4em;
+    --time-spacing: 3px;
+}
+
+/* THEME CLASSES */
+.theme-fire {
+    --bg-color: #2c0602; --primary-color: #ff5733; --secondary-color: #ff9800;
+    --container-bg: rgba(68, 18, 11, 0.7); --neon-glow: 0 0 10px rgba(255, 87, 51, 0.6);
+}
+.theme-forest {
+    --bg-color: #011f01; --primary-color: #72f172; --secondary-color: #b2ffb2;
+    --container-bg: rgba(3, 31, 3, 0.7); --neon-glow: 0 0 10px rgba(114, 241, 114, 0.5);
+}
+
+/* BASE STYLES */
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: var(--bg-color);
+    color: var(--primary-color);
+    font-family: var(--main-font);
+    text-align: center;
+    transition: background-color 0.5s;
+    background-size: cover;
+    background-position: center;
+}
+
+/* Menu Button */
+#menu-toggle-btn {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    background-color: var(--container-bg);
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 20;
+    font-size: 1em;
+    backdrop-filter: blur(3px);
+    transition: background-color 0.3s;
+}
+#menu-toggle-btn:hover {
+    background-color: rgba(31, 40, 49, 0.9);
+}
+
+/* CUSTOMISATION PANEL (MENU) STYLES */
+#settings-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 300px;
+    height: 100%;
+    background-color: #1f2833;
+    color: var(--secondary-color);
+    padding: 20px;
+    text-align: left;
+    font-size: 0.9em;
+    z-index: 30;
+    transform: translateX(100%);
+    transition: transform 0.4s ease-in-out;
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.5);
+    max-height: 100vh;
+    overflow-y: auto;
+}
+#settings-panel.open {
+    transform: translateX(0);
+}
+
+/* Menu Close Button (Cross Sign) */
+#close-menu-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    color: var(--secondary-color);
+    font-size: 1.5em;
+    cursor: pointer;
+    padding: 5px;
+    line-height: 1;
+}
+#close-menu-btn:hover {
+    color: var(--primary-color);
+}
+
+/* MAIN CLOCK CONTAINER STYLES */
+.main-container {
+    background-color: var(--container-bg);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+/* PINNED STATE */
+.main-container.pinned {
+    background-color: #1f2833;
+    backdrop-filter: none;
+    box-shadow: 0 0 20px var(--primary-color);
+}
+
+/* HIDDEN STATE */
+.main-container.hidden {
+    opacity: 0;
+    transform: scale(0.95);
+    pointer-events: none;
+}
+
+/* SESSION GOAL STYLE */
+#session-goal {
+    font-size: 1.1em;
+    font-weight: 500;
+    margin-top: 25px;
+    padding: 5px 0;
+    color: var(--secondary-color);
+    border-top: 1px solid rgba(197, 198, 199, 0.2);
+}
+
+/* ACTION/INPUT CONTROLS (inside the menu) */
+.action-controls {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px dashed var(--secondary-color);
+}
+.action-controls button {
+    background-color: #45a29e; color: #0b0c10; border: none; padding: 8px 15px;
+    border-radius: 5px; cursor: pointer; font-size: 0.9em; transition: background-color 0.3s;
+}
+.action-controls button:hover { background-color: var(--primary-color); }
+.action-controls button.pinned-active { background-color: #f39c12; color: #0b0c10; }
+
+#settings-panel label { display: block; margin-top: 15px; font-weight: 600; color: var(--primary-color); }
+#settings-panel select, #settings-panel input[type="color"], #settings-panel input[type="text"] {
+    width: 100%; padding: 8px; margin-top: 5px; border: 1px solid var(--primary-color);
+    background-color: #0b0c10; color: var(--primary-color); border-radius: 4px;
+}
+
+/* Clock Details */
+#greeting { font-size: 1.5em; margin-bottom: 10px; font-weight: 300; }
+#time, #timer-display, #stopwatch-display {
+    font-size: var(--time-font-size); font-weight: 700; letter-spacing: var(--time-spacing);
+    text-shadow: var(--neon-glow);
+}
+#date { font-size: 1.2em; margin-top: 10px; color: var(--secondary-color); }
+#location-display { font-size: 1em; margin-top: 10px; color: var(--secondary-color); }
+#weather-display { font-size: 1em; margin-top: 5px; color: var(--primary-color); font-weight: 600; }
+hr { width: 80%; border: 0; height: 1px; background-image: linear-gradient(to right, rgba(0, 0, 0, 0), var(--primary-color), rgba(0, 0, 0, 0)); margin: 20px auto; }
+.tab-button { background: none; border: none; color: var(--secondary-color); padding: 10px 15px; cursor: pointer; transition: color 0.3s, border-bottom 0.3s; }
+.tab-button.active { color: var(--primary-color); border-bottom: 2px solid var(--primary-color); font-weight: 600; }
+.tab-content { display: none; padding: 20px; width: 90%; max-width: 500px; }
+.tab-content.active { display: block; }
