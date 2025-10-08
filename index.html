@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultimate Smart Clock</title>
+    
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0b0c10">
+</head>
+<body class="theme-neon-blue">
+    
+    <button id="menu-toggle-btn" onclick="toggleMenu()">⚙️ Menu</button>
+
+    <div id="settings-panel">
+        <button id="close-menu-btn" onclick="toggleMenu()">✕</button>
+        <h2>Controls & Customisation</h2>
+
+        <label>Clock Visibility Controls</label>
+        <div class="action-controls">
+            <button id="pin-button" onclick="togglePin()">📌 Pin/Unpin</button>
+            <button onclick="toggleHide()">👁️ Hide/Show Clock</button>
+        </div>
+        
+        <label for="session-goal-input">Current Session Goal</label>
+        <input type="text" id="session-goal-input" placeholder="e.g., Working on Project X" oninput="setSessionGoal(this.value)">
+
+        <label for="theme-select">Theme Preset</label>
+        <select id="theme-select" onchange="setTheme(this.value)">
+            <option value="neon-blue">Neon Blue (Default)</option>
+            <option value="fire">Fire Red</option>
+            <option value="forest">Forest Green</option>
+            <option value="custom">Custom</option>
+        </select>
+
+        <label for="primary-color-picker">Primary Color</label>
+        <input type="color" id="primary-color-picker" value="#66fcf1" oninput="setCustomColor('primary', this.value)">
+
+        <label for="bg-url-input">Background Image URL</label>
+        <input type="text" id="bg-url-input" placeholder="Paste image URL here" onchange="setCustomBackground(this.value)">
+        <button onclick="clearCustomBackground()" style="margin-top: 5px; width: 100%; background-color: #5d6d7e;">Clear Image</button>
+
+        <label for="font-select">Font Style</label>
+        <select id="font-select" onchange="setFontStyle(this.value)">
+            <option value="'Segoe UI', sans-serif">Default</option>
+            <option value="'Courier New', monospace">Monospace (Tech)</option>
+            <option value="'Georgia', serif">Serif (Classic)</option>
+            <option value="'Impact', sans-serif">Impact (Bold)</option>
+        </select>
+    </div>
+
+    <div class="main-container" id="main-container">
+        <div id="tabs">
+            <button class="tab-button active" onclick="showTab('clock')">Clock</button>
+            <button class="tab-button" onclick="showTab('timer')">Timer</button>
+            <button class="tab-button" onclick="showTab('stopwatch')">Stopwatch</button>
+        </div>
+
+        <div id="clock" class="tab-content active">
+            <div id="greeting"></div>
+            <div id="time"></div>
+            <hr>
+            <div id="date"></div>
+            <div id="location-display">Acquiring location...</div>
+            <div id="weather-display"></div>
+            <div id="session-goal">No Goal Set</div>
+        </div>
+
+        <div id="timer" class="tab-content">
+            <h2>Countdown Timer</h2>
+            <div class="input-group">
+                <input type="number" id="timer-hours" value="0" min="0" max="99"> h
+                <input type="number" id="timer-minutes" value="5" min="0" max="59"> m
+                <input type="number" id="timer-seconds" value="0" min="0" max="59"> s
+            </div>
+            <div id="timer-display">00:05:00</div>
+            <div class="controls">
+                <button onclick="startTimer()">Start</button>
+                <button onclick="pauseTimer()">Pause</button>
+                <button onclick="resetTimer()">Reset</button>
+            </div>
+        </div>
+
+        <div id="stopwatch" class="tab-content">
+            <h2>Stopwatch</h2>
+            <div id="stopwatch-display">00:00:00:00</div>
+            <div class="controls">
+                <button onclick="startStopwatch()">Start</button>
+                <button onclick="pauseStopwatch()">Pause</button>
+                <button onclick="resetStopwatch()">Reset</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('service-worker.js')
+                    .then(registration => {
+                        console.log('SW registered:', registration);
+                    })
+                    .catch(error => {
+                        console.log('SW registration failed:', error);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>
